@@ -196,3 +196,34 @@ class GridWorldEnv(gym.Env):
         pygame.display.flip()
         self.clock.tick(self.metadata["render_fps"])
         time.sleep(self.delay)
+
+
+
+if __name__ == "__main__":
+    env = GridWorldEnv(5, 6, render_mode="human")
+
+    for _ in range(1):
+        state, _ = env.reset()
+        env.render()
+
+        while True:
+            action = env.action_space.sample()
+
+            state, reward, terminated, truncated, info = env.step(action)
+
+            print(
+                "Action",
+                state,
+                action,
+                "-> reward:",
+                reward,
+                "terminated:",
+                terminated
+            )
+
+            env.render()
+
+            if terminated or truncated:
+                break
+
+    env.close()
