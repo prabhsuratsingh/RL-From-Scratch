@@ -32,16 +32,19 @@ class Agent:
         
         return action
     
-    def _learn(self, transition):
-        s, a, r, next_s, done = transition
+    def learn(self, transition):
+        s, a, r, next_s, terminated, truncated = transition
+        done = terminated or truncated
+
         q_val = self.q_table[s][a]
 
         if done:
             q_target = r
         else:
             q_target = r + self.gamma * np.max(self.q_table[next_s])
-        
+
         self.q_table[s][a] += self.lr * (q_target - q_val)
+
         self._adjust_epsilon()
     
     def _adjust_epsilon(self):
