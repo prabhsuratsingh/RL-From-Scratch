@@ -1,7 +1,21 @@
-# import gymnasium as gym
+from agents.agent import Agent
+from algorithms.qlearning import plot_learning_history, run_qlearning
+from envs.cliff_walking import CliffWalkingEnv
+from envs.gridworld import GridWorldEnv
 
-# env = gym.make('CartPole-v1')
-# print(env.observation_space)
-# print(env.action_space)
 
-# env.reset()
+env = CliffWalkingEnv(render_mode="human")
+agent = Agent(env)
+
+history = run_qlearning(agent, env)
+
+env.close()
+plot_learning_history(history, "cliffwalking", "q-learning")
+
+# env = GridWorldEnv(num_rows=5, num_cols=6, render_mode="human")
+# agent = Agent(env)
+
+# history = run_qlearning(agent, env,)
+
+# env.close()
+# plot_learning_history(history, "gridworld", "q-learning")
