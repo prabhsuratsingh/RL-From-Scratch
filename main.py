@@ -1,11 +1,12 @@
 from agents.agent import Agent
-from algorithms.qlearning import plot_learning_history, run_qlearning
+from algorithms.qlearning import run_qlearning
 from envs.cliff_walking import CliffWalkingEnv
 from envs.gridworld import GridWorldEnv
+from utils.plots import plot_learning_history
 
 
 env = CliffWalkingEnv(render_mode="human")
-agent = Agent(env)
+agent = Agent(env, algorithm="q_learning")
 
 history = run_qlearning(agent, env)
 
