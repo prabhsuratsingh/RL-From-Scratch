@@ -145,6 +145,11 @@ class GridWorldEnv(gym.Env):
             )
             self.clock = pygame.time.Clock()
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+
         self.window.fill((255, 255, 255))
 
         # Grid
