@@ -56,7 +56,7 @@ def draw_object(screen, coords_list):
 class GridWorldEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 20}
 
-    def __init__(self, num_rows=4, num_cols=6, delay=0.05, render_mode=None):
+    def __init__(self, num_rows=5, num_cols=6, delay=0.05, render_mode=None):
         super().__init__()
 
         self.num_rows = num_rows

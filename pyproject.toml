@@ -9,5 +9,18 @@ dependencies = [
     "matplotlib>=3.10.8",
     "numpy>=2.4.1",
     "pygame>=2.6.1",
-    "scikit-learn>=1.8.0",
 ]
+
+[project.scripts]
+rl = "cli.main:main"
+
+[tool.setuptools]
+packages = [
+    "agents",
+    "algorithms",
+    "envs",
+    "runners",
+    "utils",
+    "cli",
+]
+
