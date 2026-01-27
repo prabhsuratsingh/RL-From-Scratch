@@ -6,18 +6,18 @@ from envs.gridworld import GridWorldEnv
 from utils.plots import plot_learning_history
 
 
-# env = CliffWalkingEnv(render_mode="human")
-# agent = Agent(env, algorithm="q_learning")
-
-# history = run_qlearning(agent, env)
-
-# env.close()
-# plot_learning_history(history, "cliffwalking", "q-learning")
-
-env = GridWorldEnv(num_rows=5, num_cols=6, render_mode="human")
+env = CliffWalkingEnv(render_mode="human")
 agent = Agent(env, algorithm="sarsa")
 
-history = run_sarsa(agent, env,)
+history = run_sarsa(agent, env)
 
 env.close()
-plot_learning_history(history, "gridworld", "sarsa")
+plot_learning_history(history, "cliffwalking", "sarsa")
+
+# env = GridWorldEnv(num_rows=5, num_cols=6, render_mode="human")
+# agent = Agent(env, algorithm="sarsa")
+
+# history = run_sarsa(agent, env,)
+
+# env.close()
+# plot_learning_history(history, "gridworld", "sarsa")
