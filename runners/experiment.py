@@ -4,6 +4,7 @@ from envs.cliff_walking import CliffWalkingEnv
 
 from algorithms.sarsa import run_sarsa
 from algorithms.qlearning import run_qlearning
+from algorithms.expected_sarsa import run_expected_sarsa
 from utils.plots import plot_learning_history
 
 
@@ -15,6 +16,7 @@ ENV_REGISTRY = {
 ALG_REGISTRY = {
     "sarsa": run_sarsa,
     "q_learning": run_qlearning,
+    "expected_sarsa": run_expected_sarsa
 }
 
 
