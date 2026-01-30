@@ -54,7 +54,11 @@ class Agent:
 
         elif self.algorithm == "expected_sarsa":
             policy = np.ones(self.nA) * self.epsilon / self.nA
-            best_a = np.argmax(self.q_table[next_state])
+            # best_a = np.argmax(self.q_table[next_state])
+            q_vals = self.q_table[next_state]
+            best_actions = np.flatnonzero(q_vals == q_vals.max())
+            best_a = np.random.choice(best_actions)
+
             policy[best_a] += 1.0 - self.epsilon
             return reward + self.gamma * np.dot(
                 policy, self.q_table[next_state]
