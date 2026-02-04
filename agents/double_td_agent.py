@@ -56,7 +56,7 @@ class DoubleTDAgent:
         q_select = self.q1 if use_q1 else self.q2
         q_eval = self.q2 if use_q1 else self.q1
 
-        if self.algorithm == 'double_q':
+        if self.algorithm == 'double_q_learning':
             a_star = np.argmax(q_select[next_state])
             return self.gamma * q_eval[next_state][a_star]
         elif self.algorithm == "double_sarsa":
