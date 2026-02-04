@@ -54,7 +54,7 @@ def run_td_control(agent, env, num_episodes=50, max_steps=500):
 
 if __name__ == "__main__":
     # env = GridWorldEnv(num_rows=5, num_cols=6, render_mode="human")
-    env = CliffWalkingEnv(num_rows=5, num_cols=6, render_mode="human")
+    env = CliffWalkingEnv(render_mode="human")
     agent = DoubleTDAgent(env, algorithm="double_q_learning")
 
     history = run_td_control(agent, env,)
