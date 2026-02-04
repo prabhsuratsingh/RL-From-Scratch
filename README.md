@@ -19,6 +19,7 @@ This project is a lightweight reinforcement learning framework built from scratc
 ├── algorithms/
 │   ├── sarsa.py
 │   └── qlearning.py
+│   └── expected_sarsa.py
 ├── envs/
 │   ├── gridworld.py
 │   └── cliff_walking.py
@@ -67,7 +68,7 @@ python rl.py experiment --env <env_name> --alg <alg_name> [--render]
   * Options: `grid_world`, `cliff_walking`
 * `--alg` (required): Name of the algorithm
 
-  * Options: `sarsa`, `q_learning`
+  * Options: `sarsa`, `q_learning`, `expected_sarsa`
 * `--render` (optional): Render the environment using human mode
 
 ### Examples

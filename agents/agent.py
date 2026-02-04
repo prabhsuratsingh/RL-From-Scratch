@@ -2,6 +2,14 @@ from collections import defaultdict
 import numpy as np
 
 class Agent:
+    """
+    Base Agent
+
+    Implemented Algorithms :-
+    - **Q-Learning**
+    - **SARSA**
+    - **Expected SARSA**
+    """
     def __init__(
         self,
         env,
@@ -54,7 +62,6 @@ class Agent:
 
         elif self.algorithm == "expected_sarsa":
             policy = np.ones(self.nA) * self.epsilon / self.nA
-            # best_a = np.argmax(self.q_table[next_state])
             q_vals = self.q_table[next_state]
             best_actions = np.flatnonzero(q_vals == q_vals.max())
             best_a = np.random.choice(best_actions)
@@ -65,7 +72,7 @@ class Agent:
             )
 
         else:
-            raise ValueError(f"Unknown algorithm {self.algorithm}")
+            raise ValueError(f"Unknown algorithm : {self.algorithm}")
 
     def learn(self, transition):
         if self.algorithm == "sarsa":
