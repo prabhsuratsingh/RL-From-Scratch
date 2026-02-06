@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 from envs.gridworld import GridWorldEnv
-from agents.agent import Agent
+from agents.td_agent import Agent
 from utils.plots import plot_learning_history
 
 Transition = namedtuple(

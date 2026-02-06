@@ -1,4 +1,4 @@
-from agents.agent import Agent
+from agents.td_agent import TDAgent
 from envs.gridworld import GridWorldEnv
 from envs.cliff_walking import CliffWalkingEnv
 
@@ -30,7 +30,7 @@ def run_experiment(env_name, alg_name, render=False):
     env_class = ENV_REGISTRY[env_name]
     env = env_class(render_mode="human")
 
-    agent = Agent(env, algorithm=alg_name)
+    agent = TDAgent(env, algorithm=alg_name)
 
     history = ALG_REGISTRY[alg_name](agent, env)
 

@@ -1,9 +1,9 @@
 from collections import defaultdict
 import numpy as np
 
-class Agent:
+class TDAgent:
     """
-    Base Agent
+    TD Agent
 
     Implemented Algorithms :-
     - **Q-Learning**
