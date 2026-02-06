@@ -18,12 +18,14 @@ def run_td_control(agent, env, num_episodes=50, max_steps=500):
             action = agent.choose_action(state)
 
             next_state, reward, terminated, truncated, _ = env.step(action)
+            next_action = agent.choose_action(next_state)
 
             transition = (
                 state,
                 action,
                 reward,
                 next_state,
+                next_action,
                 terminated,
                 truncated
             )
@@ -53,11 +55,11 @@ def run_td_control(agent, env, num_episodes=50, max_steps=500):
 
 
 if __name__ == "__main__":
-    # env = GridWorldEnv(num_rows=5, num_cols=6, render_mode="human")
-    env = CliffWalkingEnv(render_mode="human")
-    agent = DoubleTDAgent(env, algorithm="double_q_learning")
+    env = GridWorldEnv(num_rows=5, num_cols=6, render_mode="human")
+    # env = CliffWalkingEnv(render_mode="human")
+    agent = DoubleTDAgent(env, algorithm="double_sarsa")
 
     history = run_td_control(agent, env,)
 
     env.close()
-    plot_learning_history(history, "cliff_walking", "double_q_learning", save_dir="experiments/td")
+    plot_learning_history(history, "grid_world", "double_sarsa", save_dir="experiments/td")

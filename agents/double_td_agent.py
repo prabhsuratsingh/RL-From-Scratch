@@ -75,7 +75,7 @@ class DoubleTDAgent:
         if self.algorithm == "double_sarsa":
             s, a, r, next_s, next_a, terminated, truncated = transition
         else:
-            s, a, r, next_s, terminated, truncated = transition
+            s, a, r, next_s, _, terminated, truncated = transition
             next_a = None
 
         use_q1 = np.random,rand() < 0.5
