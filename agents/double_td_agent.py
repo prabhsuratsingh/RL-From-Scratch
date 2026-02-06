@@ -17,7 +17,7 @@ class DoubleTDAgent:
     def __init__(
             self,
             env,
-            algorithm="double_q_learning",
+            algorithm="double_q",
             learning_rate=0.01,
             discount_factor=0.9,
             epsilon_greedy=0.9,
@@ -56,7 +56,7 @@ class DoubleTDAgent:
         q_select = self.q1 if use_q1 else self.q2
         q_eval = self.q2 if use_q1 else self.q1
 
-        if self.algorithm == 'double_q_learning':
+        if self.algorithm == 'double_q':
             a_star = np.argmax(q_select[next_state])
             return self.gamma * q_eval[next_state][a_star]
         elif self.algorithm == "double_sarsa":

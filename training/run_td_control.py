@@ -1,7 +1,7 @@
 from agents.double_td_agent import DoubleTDAgent
 from envs.cliff_walking import CliffWalkingEnv
 from envs.gridworld import GridWorldEnv
-from agents.td_agent import Agent
+from agents.td_agent import TDAgent
 from utils.plots import plot_learning_history
 
 

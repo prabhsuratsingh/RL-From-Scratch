@@ -1,10 +1,8 @@
+from agents.double_td_agent import DoubleTDAgent
 from agents.td_agent import TDAgent
 from envs.gridworld import GridWorldEnv
 from envs.cliff_walking import CliffWalkingEnv
-
-from algorithms.sarsa import run_sarsa
-from algorithms.qlearning import run_qlearning
-from algorithms.expected_sarsa import run_expected_sarsa
+from training.run_td_control import run_td_control
 from utils.plots import plot_learning_history
 
 
@@ -13,31 +11,62 @@ ENV_REGISTRY = {
     "cliff_walking": CliffWalkingEnv,
 }
 
-ALG_REGISTRY = {
-    "sarsa": run_sarsa,
-    "q_learning": run_qlearning,
-    "expected_sarsa": run_expected_sarsa
+AGENT_REGISTRY = {
+    "td": TDAgent,
+    "double_td": DoubleTDAgent,
 }
 
+TD_ALGOS = {
+    "q_learning",
+    "sarsa",
+    "expected_sarsa",
+}
 
-def run_experiment(env_name, alg_name, render=False):
+DOUBLE_TD_ALGOS = {
+    "double_q",
+    "double_sarsa",
+    "double_expected_sarsa",
+}
+
+def run_experiment(
+    env_name,
+    agent_type,
+    algorithm,
+    render,
+    num_episodes,
+    subdir,
+):
     if env_name not in ENV_REGISTRY:
         raise ValueError(f"Unknown env: {env_name}")
 
-    if alg_name not in ALG_REGISTRY:
-        raise ValueError(f"Unknown alg: {alg_name}")
+    if agent_type not in AGENT_REGISTRY:
+        raise ValueError(f"Unknown agent type: {agent_type}")
+
+    if agent_type == "td" and algorithm not in TD_ALGOS:
+        raise ValueError(f"Invalid TD algorithm: {algorithm}")
+
+    if agent_type == "double_td" and algorithm not in DOUBLE_TD_ALGOS:
+        raise ValueError(f"Invalid Double TD algorithm: {algorithm}")
 
     env_class = ENV_REGISTRY[env_name]
-    env = env_class(render_mode="human")
+    env = env_class(render_mode="human" if render else None)
 
-    agent = TDAgent(env, algorithm=alg_name)
+    agent_class = AGENT_REGISTRY[agent_type]
+    agent = agent_class(env, algorithm=algorithm)
 
-    history = ALG_REGISTRY[alg_name](agent, env)
+    history = run_td_control(
+        agent,
+        env,
+        num_episodes=num_episodes,
+    )
 
     env.close()
+
+    save_dir = f"experiments/latest/{subdir}/{env_name}"
+
     plot_learning_history(
         history,
-        env_name,
-        alg_name,
-        save_dir="experiments", 
+        env_name=env_name,
+        alg_name=algorithm,
+        save_dir=save_dir,
     )
