@@ -1,5 +1,3 @@
-from tkinter import NO
-from turtle import st
 from matplotlib.pylab import rand
 import numpy as np
 from collections import defaultdict
