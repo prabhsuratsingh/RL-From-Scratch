@@ -102,7 +102,7 @@ class NStepTDAgent:
             for i, (_, _, r) in enumerate(self.buffer):
                 G += (self.gamma ** i) * r
 
-            self.q[s0][a0] += self.lr * (G - self.q[s0][a0])
+            self.q_table[s0][a0] += self.lr * (G - self.q_table[s0][a0])
             self.buffer.popleft()
 
     def _adjust_epsilon(self):
