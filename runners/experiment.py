@@ -1,4 +1,5 @@
 from agents.double_td_agent import DoubleTDAgent
+from agents.n_step_td_agent import NStepTDAgent
 from agents.td_agent import TDAgent
 from envs.gridworld import GridWorldEnv
 from envs.cliff_walking import CliffWalkingEnv
@@ -14,9 +15,16 @@ ENV_REGISTRY = {
 AGENT_REGISTRY = {
     "td": TDAgent,
     "double_td": DoubleTDAgent,
+    "n_step_td": NStepTDAgent
 }
 
 TD_ALGOS = {
+    "q_learning",
+    "sarsa",
+    "expected_sarsa",
+}
+
+N_STEP_TD_ALGOS = {
     "q_learning",
     "sarsa",
     "expected_sarsa",
@@ -47,6 +55,10 @@ def run_experiment(
 
     if agent_type == "double_td" and algorithm not in DOUBLE_TD_ALGOS:
         raise ValueError(f"Invalid Double TD algorithm: {algorithm}")
+    
+    if agent_type == "n_step_td" and algorithm not in N_STEP_TD_ALGOS:
+        raise ValueError(f"Invalid n-Step TD algorithm: {algorithm}")
+
 
     env_class = ENV_REGISTRY[env_name]
     env = env_class(render_mode="human" if render else None)
