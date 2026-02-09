@@ -40,38 +40,6 @@ class DynaQAgent:
             np.flatnonzero(q_vals == q_vals.max())
         )
 
-    def _compute_return(
-        self,
-        next_state,
-        next_action,
-        terminated
-    ):
-        G = 0.0
-
-        for i, (_, _, r) in enumerate(self.buffer):
-            G += (self.gamma ** i) * r
-
-        if not terminated and len(self.buffer) == self.n_step:
-            if self.algorithm == "q_learning":
-                G += (self.gamma ** self.n_step) * np.max(self.q_table[next_state])
-
-            elif self.algorithm == "sarsa":
-                G += (self.gamma ** self.n_step) * self.q_table[next_state][next_action]
-
-            elif self.algorithm == "expected_sarsa":
-                policy = np.ones(self.nA) * self.epsilon / self.nA
-                best_a = np.argmax(self.q_table[next_state])
-
-                policy[best_a] += 1.0 - self.epsilon
-                G += (self.gamma ** self.n_step) * np.dot(
-                    policy, self.q_table[next_state]
-                )
-
-            else:
-                raise ValueError(f"Unknown algorithm : {self.algorithm}")
-        
-        return G
-
     def learn(self, transition):
         s, a, r, next_s, _, terminated, truncated = transition
         done = terminated or truncated
