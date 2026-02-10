@@ -7,7 +7,7 @@ def main():
 
     parser.add_argument("--env", required=True, choices=ENV_REGISTRY.keys())
     parser.add_argument("--agent", required=True, choices=AGENT_REGISTRY.keys())
-    parser.add_argument("--alg", required=True)
+    parser.add_argument("--alg", required=False)
     parser.add_argument("--episodes", type=int, default=50)
     parser.add_argument("--render", action="store_true")
 

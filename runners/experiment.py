@@ -1,6 +1,8 @@
 from agents.double_td_agent import DoubleTDAgent
+from agents.dyna.dyna_q_agent import DynaQAgent
 from agents.n_step_td_agent import NStepTDAgent
 from agents.td_agent import TDAgent
+from envs.dyna_maze import DynaMazeEnv
 from envs.gridworld import GridWorldEnv
 from envs.cliff_walking import CliffWalkingEnv
 from training.run_td_control import run_td_control
@@ -10,12 +12,14 @@ from utils.plots import plot_learning_history
 ENV_REGISTRY = {
     "grid_world": GridWorldEnv,
     "cliff_walking": CliffWalkingEnv,
+    "dyna_maze": DynaMazeEnv,
 }
 
 AGENT_REGISTRY = {
     "td": TDAgent,
     "double_td": DoubleTDAgent,
-    "n_step_td": NStepTDAgent
+    "n_step_td": NStepTDAgent,
+    "dynaq": DynaQAgent,
 }
 
 TD_ALGOS = {

@@ -10,6 +10,7 @@ class DynaQAgent:
     def __init__(
         self,
         env,
+        algorithm=None,
         learning_rate=0.01,
         discount_factor=0.95,
         epsilon=0.1,

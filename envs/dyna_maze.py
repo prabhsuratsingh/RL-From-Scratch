@@ -71,9 +71,9 @@ class DynaMazeEnv(gym.Env):
             nr, nc = r, c
 
         next_state = self.grid2state[(nr, nc)]
-
-        reward = -1.0
         terminated = next_state == self.goal_state
+
+        reward = 0.0 if terminated else -1.0
 
         self.state = next_state
 
