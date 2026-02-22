@@ -47,11 +47,13 @@ class DQNAgent:
         )
 
         self.target_model = nn.Sequential(
-            nn.Linear(self.state_size, 128),
+            nn.Linear(self.state_size, 256),
             nn.ReLU(),
-            nn.Linear(128, 128),
+            nn.Linear(256, 128),
             nn.ReLU(),
-            nn.Linear(128, self.nA),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, self.nA),
         )
 
         self.target_model.load_state_dict(self.model.state_dict())

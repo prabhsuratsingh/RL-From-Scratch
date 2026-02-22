@@ -15,6 +15,7 @@ class CartPoleEnv(gym.Env):
         self.gravity = 9.8
         self.mass_cart = 1.0
         self.mass_pole = 0.1
+        self.length = 0.5
         self.total_mass = self.mass_cart + self.mass_pole
         self.polemass_length = self.mass_pole * self.length
         self.force_mag = 10.0
@@ -39,6 +40,7 @@ class CartPoleEnv(gym.Env):
 
         self.window = None
         self.clock = None
+        self.tau = 0.02
 
     def reset(self, *, seed=None, options=None):
         super().reset(seed=seed)
@@ -117,7 +119,12 @@ class CartPoleEnv(gym.Env):
         pygame.draw.rect(
             self.window,
             (0, 0, 0),
-            pygame.Rect(cart_x - cart_w / 2, cart_y - cart_h / 2, cart_w, cart_h),
+            pygame.Rect(
+                int(cart_x - cart_w / 2),
+                int(cart_y - cart_h / 2),
+                int(cart_w),
+                int(cart_h),
+            ),
         )
 
         pole_len = scale * 2 * self.length
@@ -127,8 +134,8 @@ class CartPoleEnv(gym.Env):
         pygame.draw.line(
             self.window,
             (200, 0, 0),
-            (cart_x, cart_y),
-            (pole_x, pole_y),
+            (int(cart_x), int(cart_y)),
+            (int(pole_x), int(pole_y)),
             6,
         )
 
