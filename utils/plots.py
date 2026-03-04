@@ -27,3 +27,28 @@ def plot_learning_history(history, env_name, alg_name, save_dir="experiments"):
     filename = f"{env_name}-{alg_name}-history.png"
     plt.savefig(save_dir / filename, dpi=300)
     plt.show()
+
+
+def plot_multiple_learning_history(histories, env_name, alg_name, save_dir="experiments"):
+    save_dir = Path(save_dir)
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    plt.figure(figsize=(14, 8))
+
+    for name, history in histories.items():
+
+        episodes = np.arange(len(history))
+        rewards = np.array([h[1] for h in history])
+
+        plt.plot(episodes, rewards, label=name)
+
+    plt.xlabel("Episodes", fontsize=16)
+    plt.ylabel("Episode Reward", fontsize=16)
+    plt.title(f"{env_name} - {alg_name}", fontsize=18)
+
+    plt.legend()
+    plt.grid(True)
+
+    filename = f"{env_name}-{alg_name}-comparison.png"
+    plt.savefig(save_dir / filename, dpi=300)
+    plt.show()
