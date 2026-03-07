@@ -10,6 +10,7 @@ def run_a3c(env_fn, num_workers=4):
 
     manager = mp.Manager()
     shared_history = manager.list()
+    episode_counter = mp.Value("i", 0)
 
     state_dim = env.observation_space.shape[0]
     nA = env.action_space.n
@@ -28,7 +29,9 @@ def run_a3c(env_fn, num_workers=4):
             env_fn,
             gamma=0.99,
             worker_id=i,
-            history=shared_history
+            history=shared_history,
+            episode_counter=episode_counter,
+            max_episodes=500
         )
 
         worker.start()
@@ -41,8 +44,9 @@ def run_a3c(env_fn, num_workers=4):
 
 if __name__ == "__main__":
     from envs.cart_pole import CartPoleEnv
+    mp.set_start_method("spawn")
 
-    shared_history = run_a3c(lambda: CartPoleEnv(render_mode="human"))
+    shared_history = run_a3c(lambda: CartPoleEnv())
     history = list(shared_history)
 
     plot_learning_history(

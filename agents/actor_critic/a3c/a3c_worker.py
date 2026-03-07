@@ -10,6 +10,8 @@ class A3CWorker(mp.Process):
             gamma,
             worker_id,
             history,
+            episode_counter,
+            max_episodes,
             max_steps=500
     ):
         super().__init__()
@@ -21,6 +23,8 @@ class A3CWorker(mp.Process):
         self.gamma = gamma
         self.worker_id = worker_id
         self.history = history
+        self.episode_counter = episode_counter
+        self.max_episodes = max_episodes
         self.max_steps = max_steps
 
         self.local_net = type(global_net)(
@@ -41,15 +45,21 @@ class A3CWorker(mp.Process):
         return action.item(), dist.log_prob(action), dist.entropy(), value
     
     def run(self):
+
         state, _ = self.env.reset()
 
         while True:
+
+            if self.episode_counter.value >= self.max_episodes:
+                break
+
             log_probs = []
             values = []
             rewards = []
             entropies = []
 
             for step in range(self.max_steps):
+
                 action, log_prob, entropy, value = self.choose_action(state)
 
                 next_state, reward, terminated, truncated, _ = self.env.step(action)
@@ -61,21 +71,28 @@ class A3CWorker(mp.Process):
                 entropies.append(entropy)
 
                 state = next_state
+
                 if done:
+
+                    episode_length = step + 1
+                    episode_reward = sum(rewards)
+
+                    with self.episode_counter.get_lock():
+                        self.episode_counter.value += 1
+                        ep = self.episode_counter.value
+
+                    self.history.append((episode_length, episode_reward))
+
+                    print(
+                        f"Worker {self.worker_id} "
+                        f"Episode {ep} "
+                        f"Reward {episode_reward} "
+                        f"Length {episode_length}"
+                    )
+
                     state, _ = self.env.reset()
                     break
 
-                episode_length = step
-                episode_reward = sum(rewards)
-
-                self.history.append((episode_length, episode_reward))
-
-                print(
-                    f"Worker {self.worker_id} "
-                    f"Reward {episode_reward} "
-                    f"Length {episode_length}"
-)
-            
             self.update(log_probs, values, rewards, entropies, done, state)
     
     def update(
